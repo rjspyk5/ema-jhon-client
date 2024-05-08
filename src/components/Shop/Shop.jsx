@@ -8,11 +8,14 @@ import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
 import { Link, useLoaderData } from "react-router-dom";
+import { useAxiosSecure } from "../../Hooks/AxiosSecure";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const { count: pageCount } = useLoaderData();
+
   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(pageCount / itemsPerPage);
 
@@ -23,9 +26,7 @@ const Shop = () => {
   const pages = [...Array(numberOfPages).keys()];
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    axiosSecure.get("/products").then((res) => setProducts(res.data));
   }, []);
 
   useEffect(() => {
