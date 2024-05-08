@@ -17,6 +17,7 @@ const Shop = () => {
   const [itemsPerPage, setitemsPerPage] = useState(10);
   const [currentPage, setcurrentPage] = useState(1);
   const numberOfPages = Math.ceil(pageCount / itemsPerPage);
+  const pages = [...Array(numberOfPages).keys()];
 
   const handlePrevPageButton = () => {
     if (currentPage > 1) {
@@ -33,10 +34,12 @@ const Shop = () => {
   //   for (let index = 0; index < numberOfPages; index++) {
   //     pages.push(i);
   //   }
-  const pages = [...Array(numberOfPages).keys()];
+
   useEffect(() => {
-    axiosSecure.get("/products").then((res) => setProducts(res.data));
-  }, []);
+    axiosSecure
+      .get(`/products?page=${currentPage}&size=${itemsPerPage}`)
+      .then((res) => setProducts(res.data));
+  }, [currentPage, itemsPerPage]);
 
   useEffect(() => {
     const storedCart = getShoppingCart();
@@ -119,7 +122,10 @@ const Shop = () => {
         ))}
         <select
           className="p-2"
-          onChange={(e) => setitemsPerPage(e.target.value)}
+          onChange={(e) => {
+            setitemsPerPage(e.target.value);
+            setcurrentPage(1);
+          }}
           defaultValue={numberOfPages}
           name=""
           id=""
