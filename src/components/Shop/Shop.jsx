@@ -7,11 +7,20 @@ import {
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const { count: pageCount } = useLoaderData();
+  const itemsPerPage = 10;
+  const numberOfPages = Math.ceil(pageCount / itemsPerPage);
+
+  //   const pages = [];
+  //   for (let index = 0; index < numberOfPages; index++) {
+  //     pages.push(i);
+  //   }
+  const pages = [...Array(numberOfPages).keys()];
 
   useEffect(() => {
     fetch("http://localhost:5000/products")
