@@ -15,7 +15,6 @@ const Shop = () => {
   const [cart, setCart] = useState([]);
   const axiosSecure = useAxiosSecure();
   const { count: pageCount } = useLoaderData();
-
   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(pageCount / itemsPerPage);
 
@@ -24,7 +23,6 @@ const Shop = () => {
   //     pages.push(i);
   //   }
   const pages = [...Array(numberOfPages).keys()];
-
   useEffect(() => {
     axiosSecure.get("/products").then((res) => setProducts(res.data));
   }, []);
@@ -96,7 +94,7 @@ const Shop = () => {
       </div>
       <div className="pagination">
         {pages.map((el) => (
-          <button key={el}>{el}</button>
+          <button key={el}>{el + 1}</button>
         ))}
       </div>
     </div>
