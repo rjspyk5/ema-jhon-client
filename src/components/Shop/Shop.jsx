@@ -9,14 +9,16 @@ import Product from "../Product/Product";
 import "./Shop.css";
 import { Link, useLoaderData } from "react-router-dom";
 import { useAxiosSecure } from "../../Hooks/AxiosSecure";
-
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const axiosSecure = useAxiosSecure();
   const { count: pageCount } = useLoaderData();
-  const itemsPerPage = 10;
+  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [currentPage, setcurrentPage] = useState(1);
   const numberOfPages = Math.ceil(pageCount / itemsPerPage);
+
+  console.log(currentPage);
 
   //   const pages = [];
   //   for (let index = 0; index < numberOfPages; index++) {
@@ -92,9 +94,12 @@ const Shop = () => {
           </Cart>
         </div>
       </div>
+
       <div className="pagination">
         {pages.map((el) => (
-          <button key={el}>{el + 1}</button>
+          <button onClick={() => setcurrentPage(el + 1)} key={el}>
+            {el + 1}
+          </button>
         ))}
       </div>
     </div>
