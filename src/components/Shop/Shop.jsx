@@ -18,7 +18,16 @@ const Shop = () => {
   const [currentPage, setcurrentPage] = useState(1);
   const numberOfPages = Math.ceil(pageCount / itemsPerPage);
 
-  console.log(currentPage);
+  const handlePrevPageButton = () => {
+    if (currentPage > 1) {
+      setcurrentPage(currentPage - 1);
+    }
+  };
+  const handleNextPageButton = () => {
+    if (currentPage < 8) {
+      setcurrentPage(currentPage + 1);
+    }
+  };
 
   //   const pages = [];
   //   for (let index = 0; index < numberOfPages; index++) {
@@ -73,7 +82,7 @@ const Shop = () => {
     setCart([]);
     deleteShoppingCart();
   };
-  console.log(itemsPerPage);
+
   return (
     <div>
       <div className="shop-container">
@@ -95,13 +104,21 @@ const Shop = () => {
         </div>
       </div>
 
-      <div className="pagination">
+      <div className=" flex space-x-5">
+        <button className="btn" onClick={handlePrevPageButton}>
+          Prev
+        </button>
         {pages.map((el) => (
-          <button onClick={() => setcurrentPage(el + 1)} key={el}>
+          <button
+            className={currentPage == el + 1 ? "bg-red-500 btn" : "btn"}
+            onClick={() => setcurrentPage(el + 1)}
+            key={el}
+          >
             {el + 1}
           </button>
         ))}
         <select
+          className="p-2"
           onChange={(e) => setitemsPerPage(e.target.value)}
           defaultValue={numberOfPages}
           name=""
@@ -111,6 +128,9 @@ const Shop = () => {
           <option value="20">20</option>
           <option value="30">30</option>
         </select>
+        <button className="btn" onClick={handleNextPageButton}>
+          Next
+        </button>
       </div>
     </div>
   );
