@@ -73,7 +73,7 @@ const Shop = () => {
     setCart([]);
     deleteShoppingCart();
   };
-
+  console.log(itemsPerPage);
   return (
     <div>
       <div className="shop-container">
@@ -101,6 +101,16 @@ const Shop = () => {
             {el + 1}
           </button>
         ))}
+        <select
+          onChange={(e) => setitemsPerPage(e.target.value)}
+          defaultValue={numberOfPages}
+          name=""
+          id=""
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
       </div>
     </div>
   );
